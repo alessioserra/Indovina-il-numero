@@ -23,9 +23,15 @@ public class NumeroModel {
 		
 		iniziata=true;
 		this.segreto = (int)((Math.random())*Nmax + 1);  //Genero numero segreto
-    	this.tentativiFatti=1;
+    	this.tentativiFatti=0;
 	}
 	
+	
+	/**
+	 * Metodo per effettuare un tentativo
+	 * @param t il tentativo
+	 * @return 1 se tentativo troppo alto, -1 se è troppo basso, 0 se l'utente ha indovinato
+	 */
 	public int tentativo(int t) {
 		
 		//Controllo se la partita è in corso
@@ -64,6 +70,22 @@ public class NumeroModel {
 			return false;
 		}
 		else return true;
+	}
+	
+	public boolean isIniziata() {
+		return iniziata;
+	}
+	
+	public int getSegreto() {
+		return segreto;
+	}
+	
+	public int getTentativiFatti() {
+		return tentativiFatti;
+	}
+	
+	public int getTMax() {
+		return Tmax;
 	}
 
 }

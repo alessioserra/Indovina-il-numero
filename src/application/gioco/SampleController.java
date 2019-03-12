@@ -43,14 +43,16 @@ public class SampleController {
     @FXML
     void iniziaButton(ActionEvent event) {
 
+    	//Comunico al modello di iniziare una nuova partita 
     	model.newGame();
     	
     	//Gestion dell'interfaccia
     	controlloPartita.setDisable(true);
     	controlloTentativi.setDisable(false);
     	
+    	tentativo.clear();
     	messaggi.clear();
-    	tentativiRimasti.setText(String.valueOf(Tmax));
+    	tentativiRimasti.setText(String.valueOf( model.getTMax() ));
      	
     }
 
@@ -65,39 +67,40 @@ public class SampleController {
         numero = Integer.parseInt(tentativo.getText()) ;
     	}catch (NumberFormatException e) {
     	  //messaggio all'utente se la stringa non è un numero valido
-    		messaggi.setText("Il numero non è valido!\n");
+    		messaggi.appendText("Il numero non è valido!\n");
     		return;
     	}
+    	
+    	//DOPPIO CONTROLLO
+    	if (!model.tentativoValido(numero)) {
+    		messaggi.appendText("Range non valido\n");
+    	}
+    	
+    	//Testo tentativo
+    	int risultato = model.tentativo(numero);
     	
     	//Controllo alto/basso/indovinato
-    	if (numero==segreto) {
-    		messaggi.appendText("Complimenti hai indovinato il numero in "+tentativiFatti+" tentativi\n");
+    	if (risultato==0) {
+    		messaggi.appendText("Complimenti hai indovinato il numero in "+model.getTentativiFatti()+" tentativi\n");
     		
     		controlloPartita.setDisable(false);
     		controlloTentativi.setDisable(true);
-    		iniziata=false;
-    		return;
     	}
     	
-    	//Controllo tentativi
-    	if (tentativiFatti==Tmax) {
-    		messaggi.appendText("HAI PERSO! Il numer segreto era: "+segreto+"\n");
-    		
-    		controlloPartita.setDisable(false);
-    		controlloTentativi.setDisable(true);
-    		iniziata=false;
-    		return;
+    	else if(risultato<0){
+    		messaggi.appendText("Tentativo troppo BASSO!\n");
     	}
-    	
-        //Controllo numero
-    	if (numero<segreto) messaggi.appendText("Tentativo troppo BASSO!\n");
     	else messaggi.appendText("Tentativo troppo ALTO!\n");
     	
-    	tentativiRimasti.setText(Integer.toString(Tmax-tentativiFatti));
-    	tentativiFatti++;
+    	tentativiRimasti.setText(Integer.toString(model.getTMax()-model.getTentativiFatti()));
     	
-    	
-
+    	if(!model.isIniziata()) {
+    		//La partita e' finita!
+    		if (risultato !=0) {
+    	       messaggi.appendText("Hai PERSO, hai finito i tentativi!\n");
+    	       messaggi.appendText("Il numero segreto era: "+model.getSegreto());
+    	    }
+    	}
     }
 
     @FXML

@@ -16,9 +16,9 @@ public class Main extends Application {
 			//Creo modello
 			NumeroModel model = new NumeroModel();
 			//Creo oggetto FXMLLOADER
-			FXMLLoader loader = new FXMLLoader();
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("Sample.fxml"));
 
-			BorderPane root = (BorderPane)loader.load(getClass().getResource("Sample.fxml"));
+			BorderPane root = (BorderPane)loader.load();
 			
 			//Creo oggetto controller, dal file FXML loader
 			SampleController controller = loader.getController();
