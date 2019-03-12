@@ -20,6 +20,8 @@ public class SampleController {
 
     @FXML
     private ResourceBundle resources;
+    
+    int a;
 
     @FXML
     private URL location;
