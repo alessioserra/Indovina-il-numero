@@ -1,5 +1,6 @@
 package application.gioco;
 	
+import application.gioco.model.NumeroModel;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -11,7 +12,20 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("Sample.fxml"));
+			
+			//Creo modello
+			NumeroModel model = new NumeroModel();
+			//Creo oggetto FXMLLOADER
+			FXMLLoader loader = new FXMLLoader();
+
+			BorderPane root = (BorderPane)loader.load(getClass().getResource("Sample.fxml"));
+			
+			//Creo oggetto controller, dal file FXML loader
+			SampleController controller = loader.getController();
+			
+			//Setto il modello
+			controller.setModel(model);
+			
 			Scene scene = new Scene(root,400,400);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);

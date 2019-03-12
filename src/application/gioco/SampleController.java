@@ -2,6 +2,8 @@ package application.gioco;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import application.gioco.model.NumeroModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -10,13 +12,11 @@ import javafx.scene.control.TextField;
 
 public class SampleController {
 	
-	private final int Nmax=100;
-	private final int Tmax=8;
+	private NumeroModel model;
 	
-	private int segreto;
-	private int tentativiFatti;
-	
-	private boolean iniziata=false;
+	public void setModel(NumeroModel model) {
+		this.model = model;
+	}
 
     @FXML
     private ResourceBundle resources;
@@ -43,10 +43,7 @@ public class SampleController {
     @FXML
     void iniziaButton(ActionEvent event) {
 
-    	//Inizia una nuova partita:
-    	this.segreto = (int)((Math.random())*Nmax + 1);  //Genero numero segreto
-    	this.tentativiFatti=1;
-    	this.iniziata=true;
+    	model.newGame();
     	
     	//Gestion dell'interfaccia
     	controlloPartita.setDisable(true);
@@ -112,4 +109,5 @@ public class SampleController {
         assert messaggi != null : "fx:id=\"messaggi\" was not injected: check your FXML file 'Sample.fxml'.";
 
     }
+    
 }
